@@ -8,4 +8,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="alertDialogStyle">
+        <item name="android:fullDark">@drawable/andy_alertex_dlg_bg_full_dark</item>
+        <item name="android:topDark">@drawable/andy_alertex_dlg_bg_top_dark</item>
+        <item name="android:centerDark">@drawable/andy_alertex_dlg_bg_center_dark</item>
+        <item name="android:bottomDark">@drawable/andy_alertex_dlg_bg_bottom_dark</item>
+        <item name="android:fullBright">@drawable/andy_alertex_dlg_bg_full_bright</item>
+        <item name="android:topBright">@drawable/andy_alertex_dlg_bg_top_bright</item>
+        <item name="android:centerBright">@drawable/andy_alertex_dlg_bg_center_bright</item>
+        <item name="android:bottomBright">@drawable/andy_alertex_dlg_bg_bottom_bright</item>
+        <item name="android:bottomMedium">@drawable/andy_alertex_dlg_bg_bottom_medium</item>
+        <item name="android:centerMedium">@drawable/andy_alertex_dlg_bg_center_medium</item>
+
+    </style>
+
 </resources>
