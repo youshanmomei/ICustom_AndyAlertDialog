@@ -154,5 +154,33 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
         setButton(BUTTON_POSITIVE, text, listener);
     }
 
-    //TODO #setButton2-negative
+    /**
+     * set a listener to be invoked when button 2 of the dialog is pressed
+     *
+     * @param text
+     *          the text to display in button2
+     * @param listener
+     *          the {@link android.content.DialogInterface.OnClickListener} to use
+     * @deprecated Use
+     *          {@link #setButton(int, CharSequence, OnClickListener)} with {@link DialogInterface#BUTTON_NEGATIVE}
+     */
+    @Deprecated
+    public void setButton2(CharSequence text, OnClickListener listener) {
+        setButton(BUTTON_NEGATIVE, text, listener);
+    }
+
+    /**
+     * set a listener to be invoked when button 3 of the dialog is pressed
+     *
+     * @param text
+     *          the text to display in button 3
+     * @param listener
+     *          the {@link android.content.DialogInterface.OnClickListener} to use
+     * @deprecated
+     *          {@link #setButton(int, CharSequence, OnClickListener)} with {@link DialogInterface#BUTTON_NEUTRAL}
+     */
+    @Deprecated
+    public void setButton3(CharSequence text, OnClickListener listener) {
+        setButton(BUTTON_NEUTRAL, text, listener);
+    }
 }
