@@ -3,6 +3,7 @@ package org.qc.icustom_andyalertdialog.util.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.drawable.Drawable;
 import android.os.Message;
 import android.view.View;
 import android.widget.Button;
@@ -183,4 +184,24 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
     public void setButton3(CharSequence text, OnClickListener listener) {
         setButton(BUTTON_NEUTRAL, text, listener);
     }
+
+    /**
+     * set resId to 0 if you don't want to an icon.
+     *
+     * @param resId
+     *          the resourceId of the drawable to use as the icon or 0 if you don't want to an icon
+     */
+    public void setIcon(int resId) {
+        mAlert.setIcon(resId);
+    }
+
+    public void setIcon(Drawable icon) {
+        mAlert.setIcon(icon);
+    }
+
+    public void setInverseBackgroundForced(boolean forceInverseBackground) {
+        mAlert.setInverseBackgroundForced(forceInverseBackground);
+    }
+
+    //TODO...onCreate()
 }
