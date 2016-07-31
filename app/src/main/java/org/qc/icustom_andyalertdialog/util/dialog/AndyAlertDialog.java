@@ -218,5 +218,30 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
         return super.onKeyDown(keyCode, event);
     }
 
-    //TODO...onKeyUp()
+    @Override
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        if (mAlert.onKeyUp(keyCode, event)) {
+            return true;
+        }
+        return super.onKeyUp(keyCode, event);
+    }
+
+    public static class Builder extends AlertDialog.Builder {
+
+//        private final AndyAlertController.AlertParams p;
+
+        public Builder(Context context) {
+            super(context);
+//            p = new AndyAlertController.AlertParams(context);
+        }
+
+        public Builder setTitle(int titleId) {
+//            p.title = p.mContext.getText(titleId);
+            return this;
+        }
+
+        //TODO...
+
+    }
+
 }
