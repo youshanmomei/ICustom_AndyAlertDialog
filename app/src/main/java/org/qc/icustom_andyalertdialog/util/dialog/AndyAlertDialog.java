@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.drawable.Drawable;
+import android.os.Bundle;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -203,5 +205,18 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
         mAlert.setInverseBackgroundForced(forceInverseBackground);
     }
 
-    //TODO...onCreate()
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+//        mAlert.installContent();
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (mAlert.onKeyDown(keyCode, event)) {
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //TODO...onKeyUp()
 }
