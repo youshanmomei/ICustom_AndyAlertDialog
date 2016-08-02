@@ -236,11 +236,48 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
         }
 
         public Builder setTitle(int titleId) {
-//            p.title = p.mContext.getText(titleId);
+//            p.mTitle = p.mContext.getText(titleId);
+            return this;
+        }
+
+        public Builder setTitle(CharSequence title) {
+//            p.mTitle = title;
+            return this;
+        }
+
+        /**
+         * custom title
+         * priority is high than custom title
+         * @param customTitleView
+         * @return
+         */
+        public Builder setCustomTitle(View customTitleView) {
+//            p.mCustomTitleView = customTitleView;
+            return this;
+        }
+
+        public Builder setMessage(int messageId) {
+//            p.mMessage = p.mContext.getText(messageId);
+            return this;
+        }
+
+        public Builder setMessage(CharSequence message) {
+//            p.mMessage = message;
+            return this;
+        }
+
+        public Builder setIcon(int iconId) {
+//            p.mIconId = iconId;
+            return this;
+        }
+
+        public Builder setIcon(Drawable icon) {
+//            p.mIcon = icon;
             return this;
         }
 
         //TODO...
+
 
     }
 
