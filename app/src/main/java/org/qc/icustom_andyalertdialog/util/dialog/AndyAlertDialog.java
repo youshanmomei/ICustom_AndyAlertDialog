@@ -3,12 +3,14 @@ package org.qc.icustom_andyalertdialog.util.dialog;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import org.qc.icustom_andyalertdialog.R;
@@ -276,7 +278,73 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
             return this;
         }
 
-        //TODO...
+        public Builder setPositiveButton(int textId, final OnClickListener listener) {
+//            p.mPositiveButtonText = p.mContext.getText(textId);
+//            p.mPositiveButtonListener = listener;
+            return this;
+        }
+
+        public Builder setPositiveButton(CharSequence text, final OnClickListener listener) {
+//            p.mPositiveButtonText = text;
+//            p.mPositiveButtonListener = listener;
+            return this;
+        }
+
+        public Builder setNegativeButton(int textId, final OnClickListener listener) {
+//            p.NegativeButtonText = p.mContext.getText(textId);
+//            p.mNegativeButtonListener = listener;
+            return this;
+        }
+
+        public Builder setNeturalButton(CharSequence textId, final OnClickListener listener) {
+//            p.mNeturalButtonText = p.mContext.getText(textId);
+//            p.mNeturalButtonListener = listener;
+            return this;
+        }
+
+        public Builder setCancelable(boolean cancelable) {
+//            p.mCancelable = cancelable;
+            return this;
+        }
+
+        public Builder setOnCancelListener(OnCancelListener onCancelListener) {
+//            p.mOnCancelListener = onCancelListener;
+            return this;
+        }
+
+        public Builder setOnKeyListener(OnKeyListener onKeyListener) {
+//            p.mOnkeyListener = onKeyListener;
+            return this;
+        }
+
+        public Builder setItems(int itemsId, final OnClickListener onClickListener) {
+//            p.mItems = p.mContext.getResources().getTextArray(itemsId);
+//            p.mOnClickListener = onClickListener;
+            return this;
+        }
+
+        public Builder setItems(CharSequence[] items, final OnClickListener onClickListener) {
+//            p.mItems = items;
+//            p.mOnClickListener = onClickListener;
+            return this;
+        }
+
+        public Builder setAdapter(final ListAdapter adapter, final OnClickListener listener) {
+//            p.mAdapter = adapter;
+//            p.mOnClickListener = listener;
+            return this;
+        }
+
+        public Builder setCursor(final Cursor cursor, final OnClickListener listener, String labelColumn) {
+//            p.mCursor = cursor;
+//            p.mLableColumn = labelColumn;
+//            p.mOnClickListener = listener;
+            return this;
+        }
+
+        //TODO...setMultiChoiceItems
+
+
 
 
     }
