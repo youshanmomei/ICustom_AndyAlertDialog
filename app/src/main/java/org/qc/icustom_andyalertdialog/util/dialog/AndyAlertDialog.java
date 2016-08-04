@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Message;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
@@ -342,8 +343,85 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
             return this;
         }
 
-        //TODO...setMultiChoiceItems
+        public Builder setMultiChoiceItems(int itemsId, boolean[] checkItems, final OnMultiChoiceClickListener listener) {
+//            p.Items = p.mContext.getResource().getTextArray(itemsId);
+//            p.mOnCheckboxClickListener = listener;
+//            p.mCheckItems = checkItems;
+//            p.mIsMultiChoice = true;
+            return this;
+        }
+        public Builder setMultiChoiceItems(CharSequence[] items, boolean[] checkItems, final OnMultiChoiceClickListener listener) {
+//            p.Items = items;
+//            p.mOnCheckboxClickListener = listener;
+//            p.mCheckItems = checkItems;
+//            p.mIsMultiChoice = true;
+            return this;
+        }
 
+        public Builder setMultiChoiceItems(Cursor cursor, String isCheckedColum, String labelColumn, final OnMultiChoiceClickListener listener) {
+//            p.mCursor = cursor;
+//            p.mOnCheckboxClickListener = listener;
+//            p.mIsCheckedColumn = isCheckedColum;
+//            p.mLabelColumn = labelColumn;
+//            p.mIsMultiChoice = true;
+            return this;
+        }
+
+        public Builder setSingleChoiceItems(int itemsId, int checkedItem, final OnClickListener listener) {
+//            p.mItems = p.mContext.getResources().getTextArray(itemsId);
+//            p.mOnClickListener = listener;
+//            p.mCheckedItem = checkedItem;
+//            p.mIsSingleChoice = true;
+            return this;
+        }
+
+        public Builder setSingleChoiceItems(Cursor cursor, int checkedItem, String labelColumn, final OnClickListener listener) {
+//            p.mCursor = cursor;
+//            p.mOnClickListener = listener;
+//            p.mCheckItem = checkedItem;
+//            p.mLabelColumn = labelColumn;
+//            p.mIsSingleChoice = true;
+            return this;
+        }
+
+        public Builder setSingleChoiceItems(CharSequence[] itemms, int checkedItem, final OnClickListener listener) {
+//            p.mItems = itemms;
+//            p.mOnClickListener = listener;
+//            p.mCheckedItem = checkedItem;
+//            p.mIsSingleChoice = true;
+            return this;
+        }
+
+        public Builder setSingleChoiceItems(ListAdapter adapter, int checkedItem, final OnClickListener listener) {
+//            p.mAdapter = adapter;
+//            p.mOnClickListener = listener;
+//            p.mCheckedItem = checkedItem;
+//            p.mIsSingleChoice = true;
+            return this;
+        }
+
+        public Builder setOnItemSelectedListener(final AdapterView.OnItemSelectedListener listener) {
+//            p.mOnItemSelectedListener = listener;
+            return this;
+        }
+
+        public Builder setView(View view) {
+//            p.mView = view;
+//            p.mViewSpacingSpecified = false;
+            return this;
+        }
+
+        public Builder setView(View view, int viewSpacingLeft, int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
+//            p.mView = view;
+//            p.mViewSpacingSpecified = true;
+//            p.mViewSpacingLeft = viewSpacingLeft;
+//            p.mViewSpacingTop = viewSpacingTop;
+//            p.mViewSpacingRight = viewSpacingRight;
+//            p.mViewSpacingBottom = viewSpacingBottom;
+            return this;
+        }
+
+        //TODO...setInverseBackgroundForced
 
 
 
