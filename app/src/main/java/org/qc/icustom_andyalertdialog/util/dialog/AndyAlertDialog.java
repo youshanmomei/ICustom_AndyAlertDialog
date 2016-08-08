@@ -422,9 +422,45 @@ public class AndyAlertDialog extends AlertDialog implements DialogInterface {
         }
 
         //TODO...setInverseBackgroundForced
+        public Builder setInverseBackgroundForced(boolean useInverseBackground){
+//            p.mForceInverseBackground = useInverseBackground;
+            return this;
+        }
 
+        public Builder setRecycleOnMeasureEnable(boolean enable) {
+//            p.mRecycleOnMeasure = enable;
+            return this;
+        }
 
+        @Override
+        public AlertDialog create() {
+//            AndyAlertDialog dialog = new AndyAlertDialog(p.mContext);
+//            p.apply(dialog);
+//
+//            dialog.setCancelable(p.mCancelable);
+//            if (p.mOnKeyListener != null) {
+//                dialog.setOnKeyListener(p.mOnKeyListener);
+//            }
+//            return dialog;
+            return null;
+        }
 
+        /**
+         * this method can use parent class directly
+         *
+         * create AlertDialog process:
+         * 1.create Builder instance B,set parameter to AndyController.AlertParams(ap)
+         * 2.b use show(), and new an AlertDialog instance ad, and than ap use apply() make ac in AlertController about ad to ap
+         * 3.set resource to ac in ap's apply()
+         * 4.use ad's show() to make ac use installContent()
+         *
+         * @return
+         */
+        public AlertDialog show(){
+            AlertDialog alertDialog = create();
+            alertDialog.show();
+            return alertDialog;
+        }
     }
 
 }
