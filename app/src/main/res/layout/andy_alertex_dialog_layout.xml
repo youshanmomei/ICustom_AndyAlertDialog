@@ -57,49 +57,50 @@
             android:visibility="visible" />
 
     </LinearLayout>
-    
+
     <LinearLayout
         android:id="@+id/contentPanel"
-        android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
         <ScrollView
             android:id="@+id/scrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:paddingBottom="20dp"
-            android:paddingTop="7dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:paddingTop="7dp">
 
             <TextView
                 android:id="@+id/message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:padding="5dp"
                 android:text="从容地让自己生活地深刻些，怀英，慢慢来"
                 android:textColor="#ff313131"
-                android:textSize="16sp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:textSize="16sp" />
 
         </ScrollView>
     </LinearLayout>
 
     <FrameLayout
         android:id="@+id/customPanel"
-        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
         <FrameLayout
             android:id="@+id/custom"
-            android:paddingTop="5dip"
-            android:paddingBottom="5dip"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:paddingBottom="5dip"
+            android:paddingTop="5dip" />
 
     </FrameLayout>
-    
+
     <View
         android:id="@+id/btnUpDivider"
         android:layout_width="fill_parent"
@@ -107,7 +108,87 @@
         android:layout_marginTop="1dp"
         android:background="@mipmap/andy_alertex_dlg_btn_updivider"
         android:paddingLeft="2dp"
-        android:paddingRight="2dp"
-        />
+        android:paddingRight="2dp" />
+
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/andy_alertex_dlg_btn_area_bg">
+
+            <LinearLayout
+                android:id="@+id/leftSpacer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:orientation="horizontal"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/mButtonPositive"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:background="@drawable/andy_alertex_dlg_btn_singlebtn_drawable"
+                android:maxLines="2"
+                android:text="positive"
+                android:textColor="@drawable/andy_alertex_dlg_btn_text_color"
+                android:textSize="16sp"
+                android:visibility="visible" />
+
+            <View
+                android:id="@+id/btn_middle_driver"
+                android:layout_width="1.0dp"
+                android:layout_height="match_parent"
+                android:background="@mipmap/andy_alertex_dlg_btn_middledivider"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/mButtonNeutral"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="Neutral"
+                android:textColor="@drawable/andy_alertex_dlg_btn_text_color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <View
+                android:id="@+id/btn_middle_divider2"
+                android:layout_width="1.0dp"
+                android:layout_height="match_parent"
+                android:background="@drawable/andy_alertex_dlg_bg_bottom_medium"
+                android:visibility="gone" />
+
+            <Button
+                android:id="@+id/mButtonNegative"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1"
+                android:maxLines="2"
+                android:text="Negative"
+                android:textColor="@drawable/andy_alertex_dlg_btn_text_color"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/rightSpacer"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25"
+                android:orientation="horizontal"
+                android:visibility="gone" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
