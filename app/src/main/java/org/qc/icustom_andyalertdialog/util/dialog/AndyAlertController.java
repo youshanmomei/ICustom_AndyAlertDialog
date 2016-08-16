@@ -10,6 +10,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.qc.icustom_andyalertdialog.R;
 
@@ -27,7 +28,6 @@ public class AndyAlertController {
     public static int m_MyAlertContentViewId = R.layout.andy_alertex_dialog_layout;
     private final DialogInterface mDialogInterface;
     private final Window mWindow;
-    private View mView;
 
     private final ButtonHandler mHandler;
     private Button mButonPositive;
@@ -57,6 +57,17 @@ public class AndyAlertController {
             mHandler.obtainMessage(ButtonHandler.MSG_DISMISS_DIALOG, mDialogInterface).sendToTarget();
         }
     };
+    private CharSequence mTitle;
+    private TextView mTitleView;
+    private View mCustomTitleView;
+    private CharSequence mMessage;
+    private TextView mMessageView;
+    private View mView;
+    private boolean mViewSpacingSpecified;
+    private int mViewSpacingLeft;
+    private int mViewSpacingTop;
+    private int mViewSpacingRight;
+    private int mViewSpacingBottom;
 
     private class ButtonHandler extends Handler {
         //Button clicks have Message.what as the BUTTON{1,2,3} constant
@@ -119,6 +130,56 @@ public class AndyAlertController {
         }
         mWindow.setContentView(m_MyAlertContentViewId);
         setupView();
+    }
+
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        if (mTitleView != null) {
+            mTitleView.setText(title);
+        }
+    }
+
+    /**
+     * @see android.app.AlertDialog.Builder#setCustomTitle(View)
+     * @param cusomTitleView
+     */
+    public void setCustomTitle(View cusomTitleView) {
+        mCustomTitleView = cusomTitleView;
+    }
+
+    public void setMessage(CharSequence message) {
+        mMessage = message;
+        if (mMessageView != null) {
+            mMessageView.setText(message);
+        }
+    }
+
+    /**
+     * set the view to display in the dialog
+     * @param view
+     */
+    public void setView(View view) {
+        mView = view;
+        mViewSpacingSpecified = false;
+    }
+
+    /**
+     * set the view to display in the dialog with the spacing around that view
+     * (Builder的对应方法属于hide, 此方法不会被调用到)
+     * @param view
+     * @param viewSpacingLeft
+     * @param viewSpacingTop
+     * @param viewSpacingRight
+     * @param viewSpacingBottom
+     */
+    public void setView(View view, int viewSpacingLeft, int viewSpacingTop, int viewSpacingRight, int viewSpacingBottom) {
+        mView = view;
+        mViewSpacingSpecified = true;
+        mViewSpacingLeft = viewSpacingLeft;
+        mViewSpacingTop = viewSpacingTop;
+        mViewSpacingRight = viewSpacingRight;
+        mViewSpacingBottom = viewSpacingBottom;
+
     }
 
     private void setupView() {
