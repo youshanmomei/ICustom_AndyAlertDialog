@@ -2,14 +2,21 @@ package org.qc.icustom_andyalertdialog.util.dialog;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.res.TypedArray;
+import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import org.qc.icustom_andyalertdialog.R;
@@ -68,6 +75,15 @@ public class AndyAlertController {
     private int mViewSpacingTop;
     private int mViewSpacingRight;
     private int mViewSpacingBottom;
+    private CharSequence mButtonPositiveText;
+    private CharSequence mButonNegativeText;
+    private CharSequence mButtonNeutralText;
+    private Drawable mIcon;
+    private ImageView mIconView;
+    private boolean mForceInverseBackground;
+    private ListView mListView;
+    private Button mButtonPositive;
+    private ScrollView mScrollView;
 
     private class ButtonHandler extends Handler {
         //Button clicks have Message.what as the BUTTON{1,2,3} constant
@@ -182,8 +198,111 @@ public class AndyAlertController {
 
     }
 
-    private void setupView() {
+    public void setButton(int whichButton, CharSequence text, DialogInterface.OnClickListener listener, Message msg) {
+        if (msg == null && listener != null) {
+            msg = mHandler.obtainMessage(whichButton, listener);
+        }
 
+        switch (whichButton) {
+            case DialogInterface.BUTTON_POSITIVE:
+                mButtonPositiveText = text;
+                mButtonPositiveMessage = msg;
+                break;
+
+            case DialogInterface.BUTTON_NEGATIVE:
+                mButonNegativeText = text;
+                mButtonNegativeMessage = msg;
+                break;
+
+            case DialogInterface.BUTTON_NEUTRAL:
+                mButtonNeutralText = text;
+                mButtonNeutralMessage = msg;
+                break;
+
+            default:
+                throw new IllegalArgumentException("Button does not exit");
+        }
+    }
+
+    public void setIcon(Drawable icon) {
+        mIcon = icon;
+        if ((mIconView != null) && (mIcon != null)) {
+            mIconView.setImageDrawable(icon);
+        }
+    }
+
+    public void setInverseBackgroundForced(boolean forceInverseBackground) {
+        mForceInverseBackground = forceInverseBackground;
+    }
+
+    public ListView getListView() {
+        return mListView;
+    }
+
+    public Button getButton(int whichButton) {
+        switch (whichButton) {
+            case DialogInterface.BUTTON_POSITIVE:
+                return mButtonPositive;
+            case DialogInterface.BUTTON_NEGATIVE:
+                return mButtonNegative;
+            case DialogInterface.BUTTON_NEUTRAL:
+                return mButtonNeutral;
+            default:
+                return null;
+        }
+    }
+
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        return mScrollView != null && mScrollView.executeKeyEvent(event);
+    }
+
+    public boolean onKeyUp(int keyCode, KeyEvent event) {
+        return mScrollView != null && mScrollView.executeKeyEvent(event);
+    }
+
+    private void setupView() {
+        LinearLayout contentPanel = (LinearLayout) mWindow.findViewById(R.id.contentPanel);
+        setUpContent(contentPanel);
+        boolean hasButtons = setupButtons();
+
+        LinearLayout topPanel = (LinearLayout) mWindow.findViewById(R.id.topPanel);
+        TypedArray a = mContext.obtainStyledAttributes(null, R.styleable.AndyAlertDialog, R.style.alertDialogStyle, 0);
+
+        boolean hasTitle = setupTitle(topPanel);
+        View buttonPanel = mWindow.findViewById(R.id.buttonPanel);
+        if (!hasButtons) {
+            buttonPanel.setVisibility(View.GONE);
+            mWindow.findViewById(R.id.btnUpDivider).setVisibility(View.GONE);
+        }
+
+        FrameLayout customPanel = null;
+        if (mView != null) {
+            customPanel = (FrameLayout) mWindow.findViewById(R.id.customPanel);
+            FrameLayout custom = (FrameLayout) mWindow.findViewById(R.id.custom);
+            custom.addView(mView, new WindowManager.LayoutParams(MATCH_PAERNT, MATCH_PAERNT));
+
+            if (mViewSpacingSpecified) {
+                custom.setPadding(mViewSpacingLeft, mViewSpacingTop, mViewSpacingRight, mViewSpacingBottom);
+            }
+
+            if (mListView != null) {
+                ((LinearLayout.LayoutParams) customPanel.getLayoutParams()).weight = 0;
+            }
+        } else {
+            mWindow.findViewById(R.id.customPanel).setVisibility(View.GONE);
+        }
+
+    }
+
+    private boolean setupTitle(LinearLayout topPanel) {
+        return false;
+    }
+
+    private boolean setupButtons() {
+        return false;
+    }
+
+    private void setUpContent(LinearLayout contentPanel) {
     }
 
 }
