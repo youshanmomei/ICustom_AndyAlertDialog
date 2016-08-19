@@ -6,6 +6,7 @@ import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
+import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,7 @@ public class AndyAlertController {
     private ListView mListView;
     private Button mButtonPositive;
     private ScrollView mScrollView;
+    private int mIconId=0;//0 -> hide icon, -1 -> show icon
 
     private class ButtonHandler extends Handler {
         //Button clicks have Message.what as the BUTTON{1,2,3} constant
@@ -266,7 +268,8 @@ public class AndyAlertController {
         boolean hasButtons = setupButtons();
 
         LinearLayout topPanel = (LinearLayout) mWindow.findViewById(R.id.topPanel);
-        TypedArray a = mContext.obtainStyledAttributes(null, R.styleable.AndyAlertDialog, R.style.alertDialogStyle, 0);
+//        TypedArray a = mContext.obtainStyledAttributes(null, R.styleable.AndyAlertDialog, R.style.alertDialogStyle, 0);
+        TypedArray a = mContext.obtainStyledAttributes(null, R.styleable.AndyAlertDialog, 0, 0);
 
         boolean hasTitle = setupTitle(topPanel);
         View buttonPanel = mWindow.findViewById(R.id.buttonPanel);
@@ -292,17 +295,65 @@ public class AndyAlertController {
             mWindow.findViewById(R.id.customPanel).setVisibility(View.GONE);
         }
 
+        if (hasTitle) {
+            View divider = mWindow.findViewById(R.id.titleDivider);
+            divider.setVisibility(View.VISIBLE);
+        }
+
+        setBackground(topPanel, contentPanel, customPanel, hasButtons, a, hasTitle, buttonPanel);
+        a.recycle();
+
     }
 
     private boolean setupTitle(LinearLayout topPanel) {
-        return false;
+        boolean hasTitle = true;
+
+        //if has custom title, hide default title
+        if (mCustomTitleView != null) {
+            //add the custom title view directly to the topPanel layout
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            topPanel.addView(mCustomTitleView, 1, lp);
+
+            //hide the title temple
+            View titleTemplate = mWindow.findViewById(R.id.title_template);
+            titleTemplate.setVisibility(View.GONE);
+        } else {
+            final boolean hasTextTitle = !TextUtils.isEmpty(mTitle);
+            mIconView = (ImageView) mWindow.findViewById(R.id.icon);
+            if (hasTextTitle) {
+                /* Display the title if a title is supplied, else hide it */
+                mTitleView = (TextView) mWindow.findViewById(R.id.alertTitle);
+                mTitleView.setText(mTitle);
+            }
+
+            if (mIconView != null) {
+                if (mIconId > 0) {
+                    mIconView.setImageResource(mIconId);
+                } else if (mIcon != null) {
+                    mIconView.setImageDrawable(mIcon);
+                } else if (mIconId == 0) {
+                    mIconView.setVisibility(View.GONE);
+                }
+            } else {
+                //hide the title template
+                View titleTemplate = mWindow.findViewById(R.id.title_template);
+                titleTemplate.setVisibility(View.GONE);
+                hasTitle = false;
+            }
+        }
+        return hasTitle;
     }
+
 
     private boolean setupButtons() {
         return false;
     }
 
     private void setUpContent(LinearLayout contentPanel) {
+    }
+
+    private void setBackground(LinearLayout topPanel, LinearLayout contentPanel, FrameLayout customPanel, boolean hasButtons, TypedArray a, boolean hasTitle, View buttonPanel) {
+
     }
 
 }
