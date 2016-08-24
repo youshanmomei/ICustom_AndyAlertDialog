@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -44,16 +46,16 @@ public class AndyAlertController {
     private Message mButtonNegativeMessage;
     private Button mButtonNeutral;
     private Message mButtonNeutralMessage;
-    View.OnClickListener mButtonHandler = new View.OnClickListener(){
+    View.OnClickListener mButtonHandler = new View.OnClickListener() {
 
         @Override
         public void onClick(View view) {
             Message m = null;
-            if (view == mButonPositive && mButtonPositiveMessage!=null){
+            if (view == mButonPositive && mButtonPositiveMessage != null) {
                 m = Message.obtain(mButtonPositiveMessage);
             } else if (view == mButtonNegative && mButtonNegativeMessage != null) {
                 m = Message.obtain(mButtonNegativeMessage);
-            } else if (view == mButtonNeutral && mButtonNeutralMessage !=null) {
+            } else if (view == mButtonNeutral && mButtonNeutralMessage != null) {
                 m = Message.obtain(mButtonNeutralMessage);
             }
 
@@ -85,7 +87,9 @@ public class AndyAlertController {
     private ListView mListView;
     private Button mButtonPositive;
     private ScrollView mScrollView;
-    private int mIconId=0;//0 -> hide icon, -1 -> show icon
+    private int mIconId = 0;//0 -> hide icon, -1 -> show icon
+    private ListAdapter mAdapter;
+    private int mCheckedItem = -1;
 
     private class ButtonHandler extends Handler {
         //Button clicks have Message.what as the BUTTON{1,2,3} constant
@@ -105,7 +109,7 @@ public class AndyAlertController {
                     ((DialogInterface.OnClickListener) msg.obj).onClick(mDialog.get(), msg.what);
                     break;
                 case MSG_DISMISS_DIALOG:
-                    ((DialogInterface)msg.obj).dismiss();
+                    ((DialogInterface) msg.obj).dismiss();
             }
         }
     }
@@ -158,8 +162,8 @@ public class AndyAlertController {
     }
 
     /**
-     * @see android.app.AlertDialog.Builder#setCustomTitle(View)
      * @param cusomTitleView
+     * @see android.app.AlertDialog.Builder#setCustomTitle(View)
      */
     public void setCustomTitle(View cusomTitleView) {
         mCustomTitleView = cusomTitleView;
@@ -174,6 +178,7 @@ public class AndyAlertController {
 
     /**
      * set the view to display in the dialog
+     *
      * @param view
      */
     public void setView(View view) {
@@ -184,6 +189,7 @@ public class AndyAlertController {
     /**
      * set the view to display in the dialog with the spacing around that view
      * (Builder的对应方法属于hide, 此方法不会被调用到)
+     *
      * @param view
      * @param viewSpacingLeft
      * @param viewSpacingTop
@@ -353,7 +359,98 @@ public class AndyAlertController {
     }
 
     private void setBackground(LinearLayout topPanel, LinearLayout contentPanel, FrameLayout customPanel, boolean hasButtons, TypedArray a, boolean hasTitle, View buttonPanel) {
+        //system default background
+        int fullDark = a.getResourceId(R.styleable.AndyAlertDialog_fullDark, R.drawable.andy_alertex_dlg_bg_full_bright);
+        int topDark = a.getResourceId(R.styleable.AndyAlertDialog_topDark, R.drawable.andy_alertex_dlg_bg_top_dark);
+        int centerDark = a.getResourceId(R.styleable.AndyAlertDialog_centerDark, R.drawable.andy_alertex_dlg_bg_center_dark);
+        int bottomDark = a.getResourceId(R.styleable.AndyAlertDialog_bottomDark, R.drawable.andy_alertex_dlg_bg_bottom_dark);
+        int fullBright = a.getResourceId(R.styleable.AndyAlertDialog_fullBright, R.drawable.andy_alertex_dlg_bg_full_bright);
+        int topBright = a.getResourceId(R.styleable.AndyAlertDialog_topBright, R.drawable.andy_alertex_dlg_bg_top_bright);
+        int centerBright = a.getResourceId(R.styleable.AndyAlertDialog_centerBright, R.drawable.andy_alertex_dlg_bg_center_dark);
+        int bottomBright = a.getResourceId(R.styleable.AndyAlertDialog_bottomBright, R.drawable.andy_alertex_dlg_bg_bottom_dark);
+        int bottomMedium = a.getResourceId(R.styleable.AndyAlertDialog_bottomMedium, R.drawable.andy_alertex_dlg_bg_bottom_dark);
+
+        View[] views = new View[4];
+        boolean[] light = new boolean[4];
+        View lastView = null;
+        boolean lastLight = false;
+
+        int pos = 0;
+        if (hasTitle) {
+            views[pos] = topPanel;
+            light[pos] = true;
+            pos++;
+        }
+
+        views[pos] = (contentPanel.getVisibility() == View.GONE) ? null : contentPanel;
+        light[pos] = true;
+        pos++;
+        if (customPanel != null) {
+            views[pos] = customPanel;
+            light[pos] = true;
+            pos++;
+        }
+        if (hasButtons) {
+            views[pos] = customPanel;
+            light[pos] = true;
+        }
+
+        boolean setView = false;
+        for (pos=0; pos<views.length;pos++) {
+            View v = views[pos];
+            if (v == null) {
+                continue;
+            }
+            if (lastView != null) {
+                if (!setView) {
+                    lastView.setBackgroundResource(lastLight ? topBright : topDark);
+                } else {
+                    lastView.setBackgroundResource(lastLight?centerBright:centerDark);
+                }
+                setView = true;
+            }
+            lastView = v;
+            lastLight = light[pos];
+        }
+
+        if (lastView != null) {
+            if (setView) {
+                lastView.setBackgroundResource(lastLight ? (hasButtons ? bottomMedium : bottomBright) : bottomDark);
+            } else {
+                lastView.setBackgroundResource(lastLight?fullBright:fullDark);
+            }
+        }
+
+        if ((mListView != null) && (mAdapter != null)) {
+            mListView.setAdapter(mAdapter);
+            if (mCheckedItem > -1) {
+                mListView.setItemChecked(mCheckedItem, true);
+                mListView.setSelection(mCheckedItem);
+            }
+        }
 
     }
+
+    public static class RecycleListView extends ListView {
+        boolean mRecycleOnMeasure = true;
+
+        public RecycleListView(Context context) {
+            super(context);
+        }
+
+        public RecycleListView(Context context, AttributeSet attrs) {
+            super(context, attrs);
+        }
+
+        public RecycleListView(Context context, AttributeSet attrs, int defStyleAttr) {
+            super(context, attrs, defStyleAttr);
+        }
+
+        protected boolean recycleOnMeasure(){
+            return mRecycleOnMeasure;
+        }
+    }
+
+    //TODO...
 
 }
