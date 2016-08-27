@@ -1,18 +1,24 @@
 package org.qc.icustom_andyalertdialog.util.dialog;
 
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
+import android.database.Cursor;
 import android.graphics.drawable.Drawable;
+import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -451,6 +457,55 @@ public class AndyAlertController {
         }
     }
 
-    //TODO...
+    public static class AlertParams{
+        public final Context mContext;
+        public final LayoutInflater mInflater;
+
+        public int mIconId = -1;
+        public Drawable mIcon;
+        public CharSequence mTitle;
+        public View mCustomTitleView;
+        public CharSequence mMessage;
+        public CharSequence mPostiveButtonText;
+        public DialogInterface.OnCancelListener mPostiveButtonListener;
+        public CharSequence mNegativeButtonText;
+        public DialogInterface.OnClickListener mNegativeButtonListener;
+        public CharSequence mNeutralButtonText;
+        public DialogInterface.OnClickListener mNeuralButtonListener;
+        public boolean mCancelable;
+        public DialogInterface.OnCancelListener mOnCancelListener;
+        public DialogInterface.OnClickListener mOnKeyListener;
+        public CharSequence[] mItems;
+        public ListAdapter mAdapter;
+        public DialogInterface.OnCancelListener mOnClicklistener;
+        public View mView;
+        public int mViewSpacingLeft;
+        public int mViewSpacingTop;
+        public int mViewSpacingRight;
+        public int mViewSpacingBottom;
+        public boolean mViewSpacingSpecingSpecified = false;
+        public boolean[] mCheckedItems;
+        public boolean mIsMultiChoice;
+        public boolean ismIsMultiChoice;
+        public int mCheckedItem = -1;
+        public DialogInterface.OnMultiChoiceClickListener mOnCheckboxClickListener;
+        public Cursor mCursor;
+        public String mLabelColumn;
+        public String mIsCheckedColumn;
+        public boolean mForceInverseBackground;
+        public AdapterView.OnItemClickListener mOnItemSelectedListener;
+        public MediaPlayer.OnPreparedListener mOnPrepareListViewListener;
+        public boolean mRecycleOnMeasure = true;
+
+
+
+
+
+        public AlertParams(Context context) {
+            this.mContext = context;
+            mCancelable = true;
+            mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        }
+    }
 
 }
