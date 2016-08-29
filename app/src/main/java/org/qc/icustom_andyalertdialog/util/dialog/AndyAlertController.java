@@ -461,6 +461,7 @@ public class AndyAlertController {
             return mRecycleOnMeasure;
         }
     }
+/*
 
     public static class AlertParams{
         public final Context mContext;
@@ -482,7 +483,7 @@ public class AndyAlertController {
         public DialogInterface.OnClickListener mOnKeyListener;
         public CharSequence[] mItems;
         public ListAdapter mAdapter;
-        public DialogInterface.OnCancelListener mOnClicklistener;
+        public DialogInterface.OnClickListener mOnClicklistener;
         public View mView;
         public int mViewSpacingLeft;
         public int mViewSpacingTop;
@@ -491,15 +492,15 @@ public class AndyAlertController {
         public boolean mViewSpacingSpecingSpecified = false;
         public boolean[] mCheckedItems;
         public boolean mIsMultiChoice;
-        public boolean ismIsMultiChoice;
+        public boolean mIsSingleChoice;
         public int mCheckedItem = -1;
         public DialogInterface.OnMultiChoiceClickListener mOnCheckboxClickListener;
         public Cursor mCursor;
         public String mLabelColumn;
         public String mIsCheckedColumn;
         public boolean mForceInverseBackground;
-        public AdapterView.OnItemClickListener mOnItemSelectedListener;
-        public MediaPlayer.OnPreparedListener mOnPrepareListViewListener;
+        public AdapterView.OnItemSelectedListener mOnItemSelectedListener;
+        public OnPrepareListViewListener mOnPrepareListViewListener;
         public boolean mRecycleOnMeasure = true;
 
 
@@ -513,7 +514,7 @@ public class AndyAlertController {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-/*        private void createListView(final AndyAlertController dialog){
+        private void createListView(final AndyAlertController dialog){
             final RecycleListView listView = (RecycleListView) mInflater.inflate(R.layout.andy_alertex_dialog_select, null);
             ListAdapter adapter;
 
@@ -565,7 +566,55 @@ public class AndyAlertController {
                 }
             }
 
-        }*/
+            if (mOnPrepareListViewListener != null) {
+                mOnPrepareListViewListener.onPreapareListView(listView);
+            }
+
+            */
+/**
+             * do not directly set the adapter on the ListView as we might want to add a footer to the ListView later.
+             *//*
+
+            dialog.mAdapter = adapter;
+            dialog.mCheckedItem = mCheckedItem;
+
+            if (mOnClicklistener != null) {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                        mOnClicklistener.onClick(dialog.mDialogInterface, position);
+                        if (!mIsSingleChoice) {
+                            dialog.mDialogInterface.dismiss();
+                        }
+                    }
+                });
+            } else if (mOnCheckboxClickListener != null) {
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
+                        if (mCheckedItems != null) {
+                            mCheckedItems[position] = listView.isItemChecked(position);
+                        }
+                        mOnCheckboxClickListener.onClick(dialog.mDialogInterface, position, listView.isItemChecked(position));
+                    }
+                });
+            }
+
+            //Attach a given onItemSelectedListener to the ListView
+            if (mOnItemSelectedListener != null) {
+                listView.setOnItemSelectedListener(mOnItemSelectedListener);
+            }
+            if (mIsSingleChoice) {
+                listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+            } else if (mIsMultiChoice){
+                listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
+            }
+
+            listView.mRecycleOnMeasure = mRecycleOnMeasure;
+            dialog.mListView = listView;
+
+        }
     }
+*/
 
 }
