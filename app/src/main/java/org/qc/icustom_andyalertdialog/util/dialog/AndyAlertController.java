@@ -19,13 +19,18 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Adapter;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CheckedTextView;
+import android.widget.CursorAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
+import android.widget.SimpleAdapter;
+import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import org.qc.icustom_andyalertdialog.R;
@@ -498,14 +503,69 @@ public class AndyAlertController {
         public boolean mRecycleOnMeasure = true;
 
 
-
-
+        public interface OnPrepareListViewListener{
+            void onPreapareListView(ListView listView);
+        }
 
         public AlertParams(Context context) {
             this.mContext = context;
             mCancelable = true;
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
+
+/*        private void createListView(final AndyAlertController dialog){
+            final RecycleListView listView = (RecycleListView) mInflater.inflate(R.layout.andy_alertex_dialog_select, null);
+            ListAdapter adapter;
+
+            if (mIsMultiChoice) {
+                if (mCursor == null) {
+                    adapter = new ArrayAdapter<CharSequence>(mContext, R.layout.andy_alertex_dialog_select_multichoice, android.R.id.text1, mItems){
+                        @Override
+                        public View getView(int position, View convertView, ViewGroup parent) {
+                            View view = super.getView(position, convertView, parent);
+                            if (mCheckedItems != null) {
+                                boolean isItemChecked = mCheckedItems[position];
+                                if (isItemChecked) {
+                                    listView.setItemChecked(position, true);
+                                }
+                            }
+                            return view;
+                        }
+                    };
+                } else {
+                    adapter = new CursorAdapter(mContext, mCursor, false) {
+                        private final int mLabelIndex;
+                        private final int mIsCheckedIndex;
+
+                        {
+                            final Cursor cursor = getCursor();
+                            mLabelIndex = cursor.getColumnIndexOrThrow(mLabelColumn);
+                            mIsCheckedIndex = cursor.getColumnIndexOrThrow(mIsCheckedColumn);
+                        }
+
+                        @Override
+                        public View newView(Context context, Cursor cursor, ViewGroup parent) {
+                            return mInflater.inflate(R.layout.andy_alertex_dialog_select_multchoice, parent, false);
+                        }
+
+                        @Override
+                        public void bindView(View view, Context context, Cursor cursor) {
+                            CheckedTextView text = (CheckedTextView) view.findViewById(android.R.id.text1);
+                            text.setText(cursor.getString(mLabelIndex));
+                            listView.setItemChecked(cursor.getPosition(), cursor.getInt(mIsCheckedIndex)==1);
+                        }
+                    };
+                }
+            } else {
+                int layout = mIsSingleChoice?R.layout.andy_alertex_dialog_select_singlechoice:R.layout.andy_alertex_dialog_select_item;
+                if (mCursor == null) {
+                    adapter = (mAdapter != null) ? mAdapter : new ArrayAdapter<CharSequence>(mContext, layout, android.R.id.text1, mItems);
+                } else {
+                    adapter = new SimpleCursorAdapter(mContext, layout, mCursor, new String[]{mLabelColumn}, new int[]{android.R.id.text1});
+                }
+            }
+
+        }*/
     }
 
 }
