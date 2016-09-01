@@ -1,14 +1,14 @@
 package org.qc.icustom_andyalertdialog.util.dialog;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.res.TypedArray;
 import android.database.Cursor;
 import android.graphics.drawable.Drawable;
-import android.media.MediaPlayer;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.widget.CursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -17,20 +17,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckedTextView;
-import android.widget.CursorAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ScrollView;
-import android.widget.SimpleAdapter;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import org.qc.icustom_andyalertdialog.R;
@@ -407,7 +403,7 @@ public class AndyAlertController {
         }
 
         boolean setView = false;
-        for (pos=0; pos<views.length;pos++) {
+        for (pos = 0; pos < views.length; pos++) {
             View v = views[pos];
             if (v == null) {
                 continue;
@@ -416,7 +412,7 @@ public class AndyAlertController {
                 if (!setView) {
                     lastView.setBackgroundResource(lastLight ? topBright : topDark);
                 } else {
-                    lastView.setBackgroundResource(lastLight?centerBright:centerDark);
+                    lastView.setBackgroundResource(lastLight ? centerBright : centerDark);
                 }
                 setView = true;
             }
@@ -428,7 +424,7 @@ public class AndyAlertController {
             if (setView) {
                 lastView.setBackgroundResource(lastLight ? (hasButtons ? bottomMedium : bottomBright) : bottomDark);
             } else {
-                lastView.setBackgroundResource(lastLight?fullBright:fullDark);
+                lastView.setBackgroundResource(lastLight ? fullBright : fullDark);
             }
         }
 
@@ -457,13 +453,12 @@ public class AndyAlertController {
             super(context, attrs, defStyleAttr);
         }
 
-        protected boolean recycleOnMeasure(){
+        protected boolean recycleOnMeasure() {
             return mRecycleOnMeasure;
         }
     }
-/*
 
-    public static class AlertParams{
+    public static class AlertParams {
         public final Context mContext;
         public final LayoutInflater mInflater;
 
@@ -504,7 +499,7 @@ public class AndyAlertController {
         public boolean mRecycleOnMeasure = true;
 
 
-        public interface OnPrepareListViewListener{
+        public interface OnPrepareListViewListener {
             void onPreapareListView(ListView listView);
         }
 
@@ -514,13 +509,13 @@ public class AndyAlertController {
             mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         }
 
-        private void createListView(final AndyAlertController dialog){
+        private void createListView(final AndyAlertController dialog) {
             final RecycleListView listView = (RecycleListView) mInflater.inflate(R.layout.andy_alertex_dialog_select, null);
             ListAdapter adapter;
 
             if (mIsMultiChoice) {
                 if (mCursor == null) {
-                    adapter = new ArrayAdapter<CharSequence>(mContext, R.layout.andy_alertex_dialog_select_multichoice, android.R.id.text1, mItems){
+                    adapter = new ArrayAdapter<CharSequence>(mContext, R.layout.andy_alertex_dialog_select_multichoice, android.R.id.text1, mItems) {
                         @Override
                         public View getView(int position, View convertView, ViewGroup parent) {
                             View view = super.getView(position, convertView, parent);
@@ -546,19 +541,19 @@ public class AndyAlertController {
 
                         @Override
                         public View newView(Context context, Cursor cursor, ViewGroup parent) {
-                            return mInflater.inflate(R.layout.andy_alertex_dialog_select_multchoice, parent, false);
+                            return mInflater.inflate(R.layout.andy_alertex_dialog_select_multichoice, parent, false);
                         }
 
                         @Override
                         public void bindView(View view, Context context, Cursor cursor) {
                             CheckedTextView text = (CheckedTextView) view.findViewById(android.R.id.text1);
                             text.setText(cursor.getString(mLabelIndex));
-                            listView.setItemChecked(cursor.getPosition(), cursor.getInt(mIsCheckedIndex)==1);
+                            listView.setItemChecked(cursor.getPosition(), cursor.getInt(mIsCheckedIndex) == 1);
                         }
                     };
                 }
             } else {
-                int layout = mIsSingleChoice?R.layout.andy_alertex_dialog_select_singlechoice:R.layout.andy_alertex_dialog_select_item;
+                int layout = mIsSingleChoice ? R.layout.andy_alertex_dlg_select_singlechoice : R.layout.andy_alertex_dlg_select_item;
                 if (mCursor == null) {
                     adapter = (mAdapter != null) ? mAdapter : new ArrayAdapter<CharSequence>(mContext, layout, android.R.id.text1, mItems);
                 } else {
@@ -570,10 +565,9 @@ public class AndyAlertController {
                 mOnPrepareListViewListener.onPreapareListView(listView);
             }
 
-            */
-/**
+/*
              * do not directly set the adapter on the ListView as we might want to add a footer to the ListView later.
-             *//*
+*/
 
             dialog.mAdapter = adapter;
             dialog.mCheckedItem = mCheckedItem;
@@ -589,7 +583,7 @@ public class AndyAlertController {
                     }
                 });
             } else if (mOnCheckboxClickListener != null) {
-                listView.setOnItemClickListener(new AdapterView.OnItemClickListener(){
+                listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     @Override
                     public void onItemClick(AdapterView<?> parent, View v, int position, long id) {
                         if (mCheckedItems != null) {
@@ -606,7 +600,7 @@ public class AndyAlertController {
             }
             if (mIsSingleChoice) {
                 listView.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
-            } else if (mIsMultiChoice){
+            } else if (mIsMultiChoice) {
                 listView.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
             }
 
@@ -615,6 +609,5 @@ public class AndyAlertController {
 
         }
     }
-*/
 
 }
